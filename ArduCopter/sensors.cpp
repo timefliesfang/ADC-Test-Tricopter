@@ -26,6 +26,9 @@ void Copter::read_rangefinder(void)
 #if RANGEFINDER_ENABLED == ENABLED
     rangefinder.update();
 
+    uint16_t voltage = rangefinder.voltage();
+    gcs().send_text(MAV_SEVERITY_CRITICAL, "ADC:%d",voltage);
+
     if (rangefinder.num_sensors() > 0 &&
         should_log(MASK_LOG_CTUN)) {
         DataFlash.Log_Write_RFND(rangefinder);

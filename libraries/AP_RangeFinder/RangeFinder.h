@@ -126,6 +126,8 @@ public:
     // 10Hz from main loop
     void update(void);
 
+    uint16_t voltage(void);
+
     // Handle an incoming DISTANCE_SENSOR message (from a MAVLink enabled range finder)
     void handle_msg(mavlink_message_t *msg);
 

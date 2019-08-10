@@ -621,6 +621,11 @@ void RangeFinder::update(void)
     }
 }
 
+uint16_t RangeFinder::voltage(void)
+{
+    return state[0].voltage_mv;
+}
+
 bool RangeFinder::_add_backend(AP_RangeFinder_Backend *backend)
 {
     if (!backend) {
