@@ -86,6 +86,7 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
     SCHED_TASK(rc_loop,              100,    130),
     SCHED_TASK(throttle_loop,         50,     75),
     SCHED_TASK(update_GPS,            50,    200),
+    SCHED_TASK(update_log_test,       20,    100),//mark
 #if OPTFLOW == ENABLED
     SCHED_TASK(update_optical_flow,  200,    160),
 #endif
@@ -207,6 +208,14 @@ void Copter::setup()
     // initialise the main loop scheduler
     scheduler.init(&scheduler_tasks[0], ARRAY_SIZE(scheduler_tasks), MASK_LOG_PM);
 }
+
+void Copter::update_log_test()
+{
+    if(should_log(MASK_LOG_LOG_TEST))
+    {
+        Log_Write_Log_Test(gcs().get_voltage);
+    }
+}//mark
 
 void Copter::loop()
 {

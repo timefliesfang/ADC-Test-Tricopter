@@ -5,6 +5,15 @@
 // Code to Write and Read packets from DataFlash log memory
 // Code to interact with the user to dump or erase logs
 
+//log_test
+struct PACKED log_Test
+{
+    /* data */
+    LOG_PACKET_HEADER;   // rizhibaotou
+    uint64_t time_us;    //shujuxiang
+    uint16_t a_value;
+};//mark
+
 #if AUTOTUNE_ENABLED == ENABLED
 struct PACKED log_AutoTune {
     LOG_PACKET_HEADER;
@@ -329,6 +338,19 @@ void Copter::Log_Write_Data(uint8_t id, float value)
     }
 }
 
+// Write a float data packet
+void Copter::Log_Write_Log_Test(uint16_t voltage)
+{
+    if(should_log(MASK_LOG_LOG_TEST)){
+        struct log_Test pkt = {
+                LOG_PACKET_HEADER_INIT(LOG_LOG_TEST_MSG),
+                time_us : AP_HAL::micros64(),
+                a_value : voltage
+        };
+        DataFlash.WriteCriticalBlock(&pkt, sizeof(pkt));
+    } 
+}//mark
+
 struct PACKED log_Error {
     LOG_PACKET_HEADER;
     uint64_t time_us;
@@ -521,6 +543,8 @@ const struct LogStructure Copter::log_structure[] = {
       "DFLT",  "QBf",         "TimeUS,Id,Value", "s--", "F--" },
     { LOG_ERROR_MSG, sizeof(log_Error),         
       "ERR",   "QBB",         "TimeUS,Subsys,ECode", "s--", "F--" },
+    { LOG_LOG_TEST_MSG, sizeof(log_Test),         
+      "Test",   "Qf",         "TimeUS,Value", "s--", "F--" },//mark
 #if FRAME_CONFIG == HELI_FRAME
     { LOG_HELI_MSG, sizeof(log_Heli),
       "HELI",  "Qff",         "TimeUS,DRRPM,ERRPM", "s--", "F--" },

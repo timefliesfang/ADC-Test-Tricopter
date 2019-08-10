@@ -313,6 +313,7 @@ enum LoggingParameters {
      LOG_HELI_MSG,
      LOG_PRECLAND_MSG,
      LOG_GUIDEDTARGET_MSG,
+     LOG_LOG_TEST_MSG,//mark
 };
 
 #define MASK_LOG_ATTITUDE_FAST          (1<<0)
@@ -334,6 +335,9 @@ enum LoggingParameters {
 #define MASK_LOG_MOTBATT                (1UL<<17)
 #define MASK_LOG_IMU_FAST               (1UL<<18)
 #define MASK_LOG_IMU_RAW                (1UL<<19)
+#define MASK_LOG_CT1                    (1UL<<20)//mark
+//#define MASK_LOG_CT1                  65535//mark
+#define MASK_LOG_LOG_TEST                   (1UL<<21)//mark
 #define MASK_LOG_ANY                    0xFFFF
 
 // DATA - event logging

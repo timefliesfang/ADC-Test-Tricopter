@@ -27,6 +27,7 @@ void Copter::read_rangefinder(void)
     rangefinder.update();
 
     uint16_t voltage = rangefinder.voltage();
+    gcs().get_voltage = voltage;
     gcs().send_text(MAV_SEVERITY_CRITICAL, "ADC:%d",voltage);
 
     if (rangefinder.num_sensors() > 0 &&
